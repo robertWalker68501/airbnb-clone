@@ -86,31 +86,53 @@ const Navbar = () => {
           {/* Dropdown menu */}
           {menuIsOpen && (
             <div className='absolute top-14 right-0 w-56 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 py-2 shadow-lg'>
-              <ul className='text-sm text-gray-800'>
-                <li
-                  onClick={toggleMenu}
-                  className='cursor-pointer px-4 py-3 hover:bg-gray-100'
-                >
-                  Airbnb your home
+              <ul
+                className='text-sm text-gray-800'
+                role='menu'
+              >
+                <li>
+                  <button
+                    type='button'
+                    onClick={toggleMenu}
+                    className='w-full px-4 py-3 text-left hover:bg-gray-100'
+                    role='menuitem'
+                  >
+                    Airbnb your home
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type='button'
+                    onClick={toggleMenu}
+                    className='w-full px-4 py-3 text-left hover:bg-gray-100'
+                    role='menuitem'
+                  >
+                    Help Center
+                  </button>
                 </li>
                 <li
-                  onClick={toggleMenu}
-                  className='cursor-pointer px-4 py-3 hover:bg-gray-100'
-                >
-                  Help Center
+                  role='separator'
+                  className='my-1 border-t border-gray-300'
+                />
+                <li>
+                  <button
+                    type='button'
+                    onClick={toggleMenu}
+                    className='w-full px-4 py-3 text-left hover:bg-gray-100'
+                    role='menuitem'
+                  >
+                    Sign Up
+                  </button>
                 </li>
-                <div className='my-1 border-t border-gray-300' />
-                <li
-                  onClick={toggleMenu}
-                  className='cursor-pointer px-4 py-3 hover:bg-gray-100'
-                >
-                  Sign Up
-                </li>
-                <li
-                  onClick={toggleMenu}
-                  className='cursor-pointer px-4 py-3 hover:bg-gray-100'
-                >
-                  Sign In
+                <li>
+                  <button
+                    type='button'
+                    onClick={toggleMenu}
+                    className='w-full px-4 py-3 text-left hover:bg-gray-100'
+                    role='menuitem'
+                  >
+                    Sign In
+                  </button>
                 </li>
               </ul>
             </div>
