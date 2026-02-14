@@ -1,9 +1,35 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
 import Image from 'next/image';
 import { LuMenu, LuSearch } from 'react-icons/lu';
 
 import Logo from '@/components/shared/Logo';
 
 const Navbar = () => {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleLinkClickClose = () => {
+    setOpen(false);
+  };
+
   return (
     <nav className='fixed top-0 z-50 h-18 w-full border-b border-gray-200 bg-white lg:h-24'>
       <div className='mx-auto flex h-full w-[95%] items-center justify-between md:w-[90%]'>
@@ -35,13 +61,19 @@ const Navbar = () => {
         </div>
 
         {/* Right Navbar */}
-        <div className='relative flex items-center gap-4'>
+        <div
+          ref={menuRef}
+          className='relative flex items-center gap-4'
+        >
           <button className='hidden cursor-pointer rounded-full bg-gray-50 px-4 py-2 text-sm font-medium hover:bg-gray-100 md:block'>
             Airbnb your home
           </button>
 
           <div className='flex cursor-pointer items-center gap-2 rounded-full border border-gray-300 px-2 py-1 transition hover:shadow-md'>
-            <button className='grid size-8 cursor-pointer place-items-center rounded-full transition hover:bg-gray-100'>
+            <button
+              onClick={() => setOpen((prev) => !prev)}
+              className='grid size-8 cursor-pointer place-items-center rounded-full transition hover:bg-gray-100'
+            >
               <LuMenu size={18} />
             </button>
 
@@ -56,7 +88,37 @@ const Navbar = () => {
           </div>
 
           {/* Dropdown Menu */}
-          <div></div>
+          {open && (
+            <div className='absolute top-14 right-0 w-56 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 py-2 shadow-lg'>
+              <ul className='text-sm text-gray-800'>
+                <li
+                  onClick={handleLinkClickClose}
+                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
+                >
+                  Airbnb your home
+                </li>
+                <li
+                  onClick={handleLinkClickClose}
+                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
+                >
+                  Help Center
+                </li>
+                <div className='my-1 border-t border-gray-300' />
+                <li
+                  onClick={handleLinkClickClose}
+                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
+                >
+                  Sign Up
+                </li>
+                <li
+                  onClick={handleLinkClickClose}
+                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
+                >
+                  Sign In
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </nav>
