@@ -1,8 +1,21 @@
+import ListingCard from '@/components/listings/ListingCard';
+import { LISTINGS } from '@/constants';
+import Container from '@/layouts/Container';
+
 const Home = () => {
   return (
-    <div className=''>
-      <h1>Airbnb Clone</h1>
-    </div>
+    <Container>
+      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
+        {LISTINGS.map((listing) => {
+          return (
+            <ListingCard
+              key={listing.id}
+              listing={listing}
+            />
+          );
+        })}
+      </div>
+    </Container>
   );
 };
 
