@@ -16,7 +16,11 @@ const ListingCard = ({ listing }: IListingCard) => {
           fill
           className='object-cover transition duration-300 ease-in-out group-hover:scale-105'
         />
-        <button className='absolute top-3 right-3 cursor-pointer rounded-full bg-white/90 p-2 hover:bg-white'>
+        <button
+          type='button'
+          aria-label='Add to favorites'
+          className='absolute top-3 right-3 cursor-pointer rounded-full bg-white/90 p-2 hover:bg-white'
+        >
           <LuHeart
             size={18}
             className='text-shadow-gray-700'
