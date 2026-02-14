@@ -72,6 +72,9 @@ const Navbar = () => {
           <div className='flex cursor-pointer items-center gap-2 rounded-full border border-gray-300 px-2 py-1 transition hover:shadow-md'>
             <button
               onClick={() => setOpen((prev) => !prev)}
+              aria-haspopup='menu'
+              aria-expanded={open}
+              aria-controls='navbar-dropdown-menu'
               className='grid size-8 cursor-pointer place-items-center rounded-full transition hover:bg-gray-100'
             >
               <LuMenu size={18} />
@@ -90,31 +93,52 @@ const Navbar = () => {
           {/* Dropdown Menu */}
           {open && (
             <div className='absolute top-14 right-0 w-56 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 py-2 shadow-lg'>
-              <ul className='text-sm text-gray-800'>
-                <li
-                  onClick={handleLinkClickClose}
-                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
-                >
-                  Airbnb your home
+              <ul
+                id='navbar-dropdown-menu'
+                role='menu'
+                className='text-sm text-gray-800'
+              >
+                <li role='none'>
+                  <button
+                    role='menuitem'
+                    onClick={handleLinkClickClose}
+                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                  >
+                    Airbnb your home
+                  </button>
                 </li>
-                <li
-                  onClick={handleLinkClickClose}
-                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
-                >
-                  Help Center
+                <li role='none'>
+                  <button
+                    role='menuitem'
+                    onClick={handleLinkClickClose}
+                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                  >
+                    Help Center
+                  </button>
                 </li>
-                <div className='my-1 border-t border-gray-300' />
-                <li
-                  onClick={handleLinkClickClose}
-                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
-                >
-                  Sign Up
+                <li role='none'>
+                  <div
+                    role='separator'
+                    className='my-1 border-t border-gray-300'
+                  />
                 </li>
-                <li
-                  onClick={handleLinkClickClose}
-                  className='cursor-pointer rounded-lg px-4 py-3 hover:bg-gray-100'
-                >
-                  Sign In
+                <li role='none'>
+                  <button
+                    role='menuitem'
+                    onClick={handleLinkClickClose}
+                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                  >
+                    Sign Up
+                  </button>
+                </li>
+                <li role='none'>
+                  <button
+                    role='menuitem'
+                    onClick={handleLinkClickClose}
+                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                  >
+                    Sign In
+                  </button>
                 </li>
               </ul>
             </div>
