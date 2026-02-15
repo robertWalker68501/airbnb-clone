@@ -6,8 +6,10 @@ import Image from 'next/image';
 import { LuMenu, LuSearch } from 'react-icons/lu';
 
 import Logo from '@/components/shared/Logo';
+import { useAuthModal } from '@/store/useAuthModalStore';
 
 const Navbar = () => {
+  const { openRegister, openLogin } = useAuthModal();
   const [open, setOpen] = useState<boolean>(false);
 
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -124,17 +126,19 @@ const Navbar = () => {
                 </li>
                 <li role='none'>
                   <button
-                    role='menuitem'
-                    onClick={handleLinkClickClose}
+                    onClick={() => openRegister()}
+                    role='button'
                     className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
                   >
                     Sign Up
                   </button>
                 </li>
-                <li role='none'>
+                <li
+                  role='none'
+                  onClick={() => openLogin()}
+                >
                   <button
                     role='menuitem'
-                    onClick={handleLinkClickClose}
                     className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
                   >
                     Sign In
