@@ -18,6 +18,10 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  listings     Listing[]
+  reservations Reservation[]
+  favoriteIds  String[]      @default([])
+
   @@unique([email])
   @@map("user")
 }
@@ -68,4 +72,50 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Listing {
+  id            String @id @default(cuid())
+  title         String
+  description   String
+  imageSrc      String
+  category      String
+  roomCount     Int
+  bathroomCount Int
+  guestCount    Int
+  price         Int
+  locationValue String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  reservations Reservation[]
+
+  @@index([userId])
+  @@index([locationValue])
+  @@index([category])
+  @@map("listing")
+}
+
+model Reservation {
+  id         String   @id @default(cuid())
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  listingId String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@index([listingId])
+  @@index([userId])
+  @@map("reservation")
 }
