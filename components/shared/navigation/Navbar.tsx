@@ -3,15 +3,20 @@
 import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { LuMenu, LuSearch } from 'react-icons/lu';
 
 import Logo from '@/components/shared/Logo';
+import { authClient } from '@/lib/auth-client';
 import { useAuthModal } from '@/store/useAuthModalStore';
 
 const Navbar = () => {
+  const { data: session, isPending } = authClient.useSession();
   const { openRegister, openLogin } = useAuthModal();
-  const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
 
+  const [open, setOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -30,6 +35,11 @@ const Navbar = () => {
 
   const handleLinkClickClose = () => {
     setOpen(false);
+  };
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    router.refresh();
   };
 
   return (
@@ -67,9 +77,11 @@ const Navbar = () => {
           ref={menuRef}
           className='relative flex items-center gap-4'
         >
-          <button className='hidden cursor-pointer rounded-full bg-gray-50 px-4 py-2 text-sm font-medium hover:bg-gray-100 md:block'>
-            Airbnb your home
-          </button>
+          {session && !isPending && (
+            <button className='hidden cursor-pointer rounded-full bg-gray-50 px-4 py-2 text-sm font-medium hover:bg-gray-100 md:block'>
+              Airbnb your home
+            </button>
+          )}
 
           <div className='flex cursor-pointer items-center gap-2 rounded-full border border-gray-300 px-2 py-1 transition hover:shadow-md'>
             <button
@@ -82,14 +94,25 @@ const Navbar = () => {
               <LuMenu size={18} />
             </button>
 
-            <div className='relative size-8 overflow-hidden rounded-full'>
-              <Image
-                src='/assets/images/image.png'
-                alt='User Avatar'
-                fill
-                className='object-cover'
-              />
-            </div>
+            {session && (
+              <div className='relative size-8 overflow-hidden rounded-full'>
+                {session.user.image ? (
+                  <Image
+                    src={session.user.image}
+                    alt='User Avatar'
+                    fill
+                    className='object-cover'
+                  />
+                ) : (
+                  <Image
+                    src='/assets/images/image.png'
+                    alt='User Avatar'
+                    fill
+                    className='object-cover'
+                  />
+                )}
+              </div>
+            )}
           </div>
 
           {/* Dropdown Menu */}
@@ -100,15 +123,39 @@ const Navbar = () => {
                 role='menu'
                 className='text-sm text-gray-800'
               >
-                <li role='none'>
-                  <button
-                    role='menuitem'
-                    onClick={handleLinkClickClose}
-                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
-                  >
-                    Airbnb your home
-                  </button>
-                </li>
+                {session && !isPending && (
+                  <>
+                    <li role='none'>
+                      <button
+                        role='menuitem'
+                        onClick={handleLinkClickClose}
+                        className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                      >
+                        Airbnb your home
+                      </button>
+                    </li>
+                    <Link href='/favorites'>
+                      <li className='cursor-pointer px-4 py-3 hover:bg-gray-100'>
+                        Your Favorites
+                      </li>
+                    </Link>
+                    <Link href='/reservations'>
+                      <li className='cursor-pointer px-4 py-3 hover:bg-gray-100'>
+                        Your Reservations
+                      </li>
+                    </Link>
+                    <Link href='/properties'>
+                      <li className='cursor-pointer px-4 py-3 hover:bg-gray-100'>
+                        Your Properties
+                      </li>
+                    </Link>
+                    <Link href='/trips'>
+                      <li className='cursor-pointer px-4 py-3 hover:bg-gray-100'>
+                        Your Trips
+                      </li>
+                    </Link>
+                  </>
+                )}
                 <li role='none'>
                   <button
                     role='menuitem'
@@ -124,26 +171,40 @@ const Navbar = () => {
                     className='my-1 border-t border-gray-300'
                   />
                 </li>
-                <li role='none'>
-                  <button
-                    onClick={() => openRegister()}
-                    role='button'
-                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
-                  >
-                    Sign Up
-                  </button>
-                </li>
-                <li
-                  role='none'
-                  onClick={() => openLogin()}
-                >
-                  <button
-                    role='menuitem'
-                    className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
-                  >
-                    Sign In
-                  </button>
-                </li>
+                {session ? (
+                  <li role='none'>
+                    <button
+                      onClick={handleLogout}
+                      role='button'
+                      className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                    >
+                      Logout
+                    </button>
+                  </li>
+                ) : (
+                  <>
+                    <li role='none'>
+                      <button
+                        onClick={() => openRegister()}
+                        role='button'
+                        className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                      >
+                        Sign Up
+                      </button>
+                    </li>
+                    <li
+                      role='none'
+                      onClick={() => openLogin()}
+                    >
+                      <button
+                        role='menuitem'
+                        className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
+                      >
+                        Sign In
+                      </button>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           )}
