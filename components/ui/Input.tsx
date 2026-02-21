@@ -42,6 +42,7 @@ const Input = ({
       outline-none
       focus:border-2
       disabled:opacity-70
+      text-gray-500
     `,
     error
       ? 'border-red-500 focus:border-red-500'

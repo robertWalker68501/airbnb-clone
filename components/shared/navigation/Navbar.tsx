@@ -10,10 +10,12 @@ import { LuMenu, LuSearch } from 'react-icons/lu';
 import Logo from '@/components/shared/Logo';
 import { authClient } from '@/lib/auth-client';
 import { useAuthModal } from '@/store/useAuthModalStore';
+import { useCreateListingModal } from '@/store/useCreateListingModal';
 
 const Navbar = () => {
   const { data: session, isPending } = authClient.useSession();
   const { openRegister, openLogin } = useAuthModal();
+  const { open: openCreateListing } = useCreateListingModal();
   const router = useRouter();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -78,7 +80,10 @@ const Navbar = () => {
           className='relative flex items-center gap-4'
         >
           {session && !isPending && (
-            <button className='hidden cursor-pointer rounded-full bg-gray-50 px-4 py-2 text-sm font-medium hover:bg-gray-100 md:block'>
+            <button
+              onClick={openCreateListing}
+              className='hidden cursor-pointer rounded-full bg-gray-50 px-4 py-2 text-sm font-medium hover:bg-gray-100 md:block'
+            >
               Airbnb your home
             </button>
           )}
@@ -102,6 +107,7 @@ const Navbar = () => {
                     alt='User Avatar'
                     fill
                     className='object-cover'
+                    sizes='(max-width: 40px) 20vw, (max-width: 60px) 15vw, 12vw'
                   />
                 ) : (
                   <Image
@@ -128,7 +134,7 @@ const Navbar = () => {
                     <li role='none'>
                       <button
                         role='menuitem'
-                        onClick={handleLinkClickClose}
+                        onClick={openCreateListing}
                         className='w-full rounded-lg px-4 py-3 text-left hover:bg-gray-100'
                       >
                         Airbnb your home

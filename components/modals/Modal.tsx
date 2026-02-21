@@ -12,7 +12,7 @@ interface IModal {
 const Modal = ({ isOpen, onClose, title, children }: IModal) => {
   return (
     <div
-      aria-hidden={isOpen}
+      aria-hidden={!isOpen}
       className={`fixed inset-0 z-50 flex items-center justify-center px-4 transition-opacity duration-500 ${isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
     >
       {/* Backdrop */}

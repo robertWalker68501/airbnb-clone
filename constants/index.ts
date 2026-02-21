@@ -1,3 +1,12 @@
+import { FaHome } from 'react-icons/fa';
+import {
+  LuBuilding,
+  LuCastle,
+  LuMountain,
+  LuTent,
+  LuWaves,
+} from 'react-icons/lu';
+
 export const LISTINGS = [
   {
     id: 1,
@@ -40,5 +49,44 @@ export const LISTINGS = [
     location: 'Paris, France',
     image: '/assets/images/image6.jpeg',
     price: 240,
+  },
+];
+
+export const CATEGORIES = [
+  {
+    id: 1,
+    label: 'House',
+    icon: FaHome,
+    slug: 'house',
+  },
+  {
+    id: 2,
+    label: 'Apartment',
+    icon: LuBuilding,
+    slug: 'apartment',
+  },
+  {
+    id: 3,
+    label: 'Cabin',
+    icon: LuMountain,
+    slug: 'cabin',
+  },
+  {
+    id: 4,
+    label: 'Beach',
+    icon: LuWaves,
+    slug: 'beach',
+  },
+  {
+    id: 5,
+    label: 'Camping',
+    icon: LuTent,
+    slug: 'camping',
+  },
+  {
+    id: 6,
+    label: 'Castle',
+    icon: LuCastle,
+    slug: 'castle',
   },
 ];

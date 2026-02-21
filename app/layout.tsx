@@ -5,6 +5,7 @@ import { Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 
+import CreateListingModal from '@/components/modals/CreateListingModal';
 import LoginModal from '@/components/modals/LoginModal';
 import RegisterModal from '@/components/modals/RegisterModal';
 import Navbar from '@/components/shared/navigation/Navbar';
@@ -32,6 +33,7 @@ export default function RootLayout({
         <div className='mt-18 px-4 py-2 md:px-20 lg:mt-24'>{children}</div>
         <RegisterModal />
         <LoginModal />
+        <CreateListingModal />
         <Toaster />
       </body>
     </html>

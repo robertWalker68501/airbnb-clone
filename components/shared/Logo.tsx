@@ -24,6 +24,8 @@ const Logo = ({
         alt='Airbnb Logo'
         width={width}
         height={height}
+        loading='eager'
+        className='h-auto w-auto'
       />
     </Link>
   );
