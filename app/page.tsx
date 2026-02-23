@@ -1,16 +1,21 @@
 import Listings from '@/components/listings/Listings';
+import { Suspense } from 'react';
 
 export interface IHomeProps {
-  searchParams: {
+  searchParams: Promise<{
     category?: string;
     locationValue?: string;
     minPrice?: number;
     maxPrice?: number;
-  };
+  }>;
 }
 
 const Home = ({ searchParams }: IHomeProps) => {
-  return <Listings searchParams={searchParams} />;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <Listings searchParams={searchParams} />
+    </Suspense>
+  );
 };
 
 export default Home;
