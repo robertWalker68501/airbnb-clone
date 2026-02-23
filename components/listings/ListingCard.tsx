@@ -1,15 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import { LuHeart } from 'react-icons/lu';
 import { Listing } from '@/app/generated/prisma/client';
 import useCountries from '@/custom-hooks/useCountries';
+import HeartButton from '@/components/favorites/HeartButton';
 
 interface IListingCard {
   listing: Listing;
+  currentUser: {
+    id: string;
+    favoriteIds: string[];
+  } | null;
 }
 
-const ListingCard = ({ listing }: IListingCard) => {
+const ListingCard = ({ listing, currentUser }: IListingCard) => {
   const { getByValue } = useCountries();
   const location = getByValue(listing.locationValue);
 
@@ -24,16 +28,10 @@ const ListingCard = ({ listing }: IListingCard) => {
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           className='object-cover transition duration-300 ease-in-out group-hover:scale-105'
         />
-        <button
-          type='button'
-          aria-label='Add to favorites'
-          className='absolute top-3 right-3 cursor-pointer rounded-full bg-white/90 p-2 hover:bg-white'
-        >
-          <LuHeart
-            size={18}
-            className='text-shadow-gray-700'
-          />
-        </button>
+        <HeartButton
+          listingId={listing.id}
+          currentUser={currentUser}
+        />
       </div>
 
       <div className='mt-3 space-y-1 text-sm'>

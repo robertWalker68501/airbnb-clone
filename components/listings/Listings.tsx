@@ -5,7 +5,7 @@ import { getListings } from '@/services/listing';
 import { Listing } from '@/app/generated/prisma/client';
 
 const Listings = async ({ searchParams }: IHomeProps) => {
-  const params = searchParams;
+  const params = await searchParams;
   const currentUser = await getCurrentUser();
   const listings = await getListings({
     category: params.category,
@@ -20,6 +20,7 @@ const Listings = async ({ searchParams }: IHomeProps) => {
           <ListingCard
             key={listing.id}
             listing={listing}
+            currentUser={currentUser}
           />
         );
       })}
